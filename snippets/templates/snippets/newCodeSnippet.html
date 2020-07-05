@@ -1,0 +1,77 @@
+{% extends "snippets/base1.html" %}
+{% block footerMessage %}
+		dedicated to r❤shna shaik :)
+{% endblock %}
+{% block newcode %}
+
+	
+	<div class="comments-wrap ">
+
+                <!-- START respond -->
+                <div id="respond" class="col-full">
+
+                    <h3 class="h2">Add Code <span>All fields are mandatory. Use a precise title</span></h3>
+
+                    <form name="contactForm" id="contactForm" method="post" action="/snippets/submitNewCodeSnippet" autocomplete="off" class="needs-validation" novalidate="" onsubmit="return validateForm()">{% csrf_token %}
+                        <fieldset>
+
+                            <div class="form-field">
+                                <input name="title" id="title" class="full-width" placeholder="Title*" value="" type="text">
+                            </div>
+
+                           
+
+                            <div class="message form-field">
+                                <textarea name="code_snippet" id="code_snippet" class="full-width" placeholder="" ></textarea>
+                                
+                            </div> 
+                            <input type="hidden" name="username" id="username" value="{{user.get_username}}">
+
+                            
+							<script>
+									//console.log(document.getElementById('code_snippet').style);
+									  var editor = CodeMirror.fromTextArea(document.getElementById('code_snippet'), {
+									  	lineNumbers: true,
+										theme: 'monokai',
+										});
+									  
+									
+
+							</script>
+							<br>
+							
+
+
+                            <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large " value="Submit" type="submit">
+
+                        </fieldset>
+                    </form> <!-- end form -->
+
+                </div>
+                <!-- END respond-->
+
+            </div> <!-- end comment-respond -->
+
+    <script type="text/javascript">
+    	function validateForm() {
+    		var title = document.getElementById("title").value;
+    		var code_snippet = document.getElementById("code_snippet").value;
+    		if(title.length == 0)
+    		{
+    			alert("Enter a title for your code");
+    			return false;
+    		}
+    		
+    		else
+    		{
+    			return true;
+    		}
+    	}
+    </script>
+
+        
+	
+
+
+
+{% endblock %}

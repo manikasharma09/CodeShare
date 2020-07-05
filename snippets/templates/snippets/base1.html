@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142476082-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-142476082-1');
+    </script>
+
+    {% load static %}
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>CodeShare Dev</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'snippets/css/base.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'snippets/css/vendor.css' %}"> -->
+    
+    <link rel="stylesheet" href="{% static 'snippets/css/main.css' %}">
+
+    <!-- Code mirror
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'snippets/lib/codemirror.css' %}">
+    <link rel="stylesheet" href="{% static 'snippets/theme/monokai.css' %}">
+    <script src="{% static 'snippets/mode/javascript/javascript.js' %}"></script>
+    <script src="{% static 'snippets/lib/codemirror.js' %}"></script>
+
+    <script src="{% static 'snippets/js/modernizr.js' %}"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!--custom styling for like button -->
+    <style type="text/css">
+
+
+
+        {% block likecss %}
+        {% endblock %}
+    </style>
+
+</head>
+
+<body id="top">
+
+    {% block preloader %}
+    {% endblock %}
+    
+    <header class="s-header header">
+
+        <div class="header__logo">
+            <a class="logo" href="/snippets">
+
+                <img src="{% static 'snippets/images/logo_cs.png' %}" alt="Homepage">
+            </a>
+        </div> <!-- end header__logo -->
+
+        <a class="header__search-trigger" href="#0"></a>
+        <div class="header__search">
+
+            <form role="search" method="post" class="header__search-form" action="/snippets/search">
+                {% csrf_token %}
+                <label>
+                    <span class="hide-content">Search for:</span>
+                    <input type="search" class="search-field" placeholder="" value="" name="search_term" title="Search for:" autocomplete="off">
+                </label>
+                <input type="submit" class="search-submit" value="Search">
+            </form>
+
+            <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+        </div>  <!-- end header__search -->
+
+        <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+        <nav class="header__nav-wrap">
+
+            <h2 class="header__nav-heading h6">Navigate to</h2>
+
+            <ul class="header__nav">
+                <li class="current"><a href="/snippets" title="">Home</a></li>
+                {% if user.is_authenticated %}
+
+
+
+                <li class="has-children">
+                    <a href="#0" title="">{{user.get_username}}</a>
+                    <ul class="sub-menu">
+                        
+                        <li><a href="/snippets/profile/{{user.get_username}}">Profile</a></li>
+                        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                        
+                    </ul>
+                </li>
+                {% else %}
+                <li class="current"><a href="{% url 'login'%}?next={{request.path}}" title="">Login</a></li>
+                <li class="current"><a href="/snippets/register" title="">Register</a></li>
+
+                {% endif %}
+                <li class="current"><a href="/snippets/newCodeSnippet" title="">New Article</a></li>
+                
+            </ul> <!-- end header__nav -->
+
+            <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+
+        </nav> <!-- end header__nav-wrap -->
+
+    </header> <!-- s-header -->
+
+    <br>
+    <section class="s-content">
+         <script src="{% static 'snippets/js/jquery-3.4.js' %}"></script>
+        
+        <div class="row entries-wrap wide">
+            {% block newcode %}
+            {% endblock %}
+            
+            <div class="entries" id="articles">
+                
+                {% block content %}
+                {% endblock %}
+        
+            </div>
+
+        {% block comment_section %}
+            {% endblock %}
+        </div> <!-- end entries -->
+        </div> <!-- end entries-wrap -->
+
+    </section> <!-- end s-content -->
+
+<div class="col-six">
+                    <div class="s-footer__copyright">
+                        <span>
+  {% block footerMessage %}
+  {% endblock %}
+
+
+</span>
+
+                    </div>
+                </div>
+
+    <script src="{% static 'snippets/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'snippets/js/plugins.js' %}"></script>
+    <script src="{% static 'snippets/js/main.js' %}"></script>
+
+</body>
+
+</html>
